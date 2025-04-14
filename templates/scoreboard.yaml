@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-scoreboard
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Football Scoreboard</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            table { border-collapse: collapse; width: 50%; margin-top: 20px; }
+            th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+            th { background-color: #f4f4f4; }
+        </style>
+    </head>
+    <body>
+
+    <h1>Football Matches</h1>
+    <ul>
+      {{- range .Values.scores }}
+        <li>{{ .team1 }} {{ .score1 }} - {{ .score2 }} {{ .team2 }}</li>
+      {{- end }}
+    </ul>
+
+    <h2>Standings</h2>
+    <table id="standings">
+        <thead>
+        <tr><th>Team</th><th>Points</th></tr>
+        </thead>
+        <tbody>
+        <!-- JS will populate -->
+        </tbody>
+    </table>
+
+    <script>
+        const matches = [
+        {{- range .Values.scores }}
+            { team1: "{{ .team1 }}", team2: "{{ .team2 }}", score1: {{ .score1 }}, score2: {{ .score2 }} },
+        {{- end }}
+        ];
+
+        const points = {};
+
+        matches.forEach(({team1, team2, score1, score2}) => {
+            if (!(team1 in points)) points[team1] = 0;
+            if (!(team2 in points)) points[team2] = 0;
+
+            if (score1 > score2) {
+                points[team1] += 3;
+            } else if (score1 < score2) {
+                points[team2] += 3;
+            } else {
+                points[team1] += 1;
+                points[team2] += 1;
+            }
+        });
+
+        const sorted = Object.entries(points).sort((a, b) => b[1] - a[1]);
+        const tbody = document.querySelector("#standings tbody");
+
+        sorted.forEach(([team, pts]) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${team}</td><td>${pts}</td>`;
+            tbody.appendChild(row);
+        });
+    </script>
+
+    </body>
+    </html>
