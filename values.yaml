@@ -13,3 +13,4 @@ calculations:
   - calc: 49 / 23
   - calc: 4.9 / 2.03
   - calc: 49 _ 23
+  - calc: 49a + 23
