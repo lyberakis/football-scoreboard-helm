@@ -4,28 +4,8 @@ service:
   type: ClusterIP
   port: 80
 
-scores:
-  - team1: "Qatar"
-    team2: "Ecuador"
-    score1: 0
-    score2: 2
-  - team1: "Senegal"
-    team2: "Netherlands"
-    score1: 0
-    score2: 2
-  - team1: "Qatar"
-    team2: "Senegal"
-    score1: 1
-    score2: 3
-  - team1: "Netherlands"
-    team2: "Ecuador"
-    score1: 1
-    score2: 1
-  - team1: "Ecuador"
-    team2: "Senegal"
-    score1: 1
-    score2: 2
-  - team1: "Netherlands"
-    team2: "Qatar"
-    score1: 2
-    score2: 0
+calculations:
+  - calc: 3 + 85 + 3
+  - calc: 10 - 3
+  - calc: 35 * 34
+  - calc: 49 / 23
