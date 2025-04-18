@@ -6,6 +6,10 @@ service:
 
 calculations:
   - calc: 3 + 85 + 3
-  - calc: 10 - 3
+  - calc: 5 + 44.5 + 22.6
+  - calc: 10 - 3 - 3
   - calc: 35 * 34
+  - calc: 3.5 * 3.4
   - calc: 49 / 23
+  - calc: 4.9 / 2.03
+  - calc: 49 _ 23

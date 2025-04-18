@@ -1,13 +1,39 @@
 results:
   {{- range .Values.calculations }}
-    {{- if (regexMatch "^\\s*\\d+(\\s*\\+\\s*\\d+)+\\s*$" .calc) }}
-      {{ $parts := split "+" .calc }}
-      {{ $result := 0 }}
+    {{ $result := 0 }}
+    {{- if (regexMatch "^\\s*\\d+(\\.\\d+)*(\\s*\\+\\s*\\d+(\\.\\d+)*)+\\s*$" .calc) }}
+      {{- $parts := split "+" .calc }}
       {{- range $parts }}
-        {{ $result = add $result (atoi (trim . )) }}
+        {{- $result = addf $result (trim . ) }}
       {{- end }}
-  result: {{ $result }}
+    {{- else if (regexMatch "^\\s*\\d+(\\.\\d+)*(\\s*-\\s*\\d+(\\.\\d+)*)+\\s*$" .calc) }}
+      {{- $parts := split "-" .calc }}
+      {{- range $i, $p := $parts }}
+        {{- $p = trim $p }}
+        {{- if ne (trim $i) "_0" }}
+          {{- $result = subf $result $p }}
+        {{- else }}
+          {{- $result = $p }}
+        {{- end }}
+      {{- end }}
+    {{- else if (regexMatch "^\\s*\\d+(\\.\\d+)*(\\s*\\*\\s*\\d+(\\.\\d+)*)+\\s*$" .calc) }}
+      {{- $parts := split "*" .calc }}
+      {{- $result = 1 }}
+      {{- range $parts }}
+        {{- $result = mulf $result (trim . ) }}
+      {{- end }}
+    {{- else if (regexMatch "^\\s*\\d+(\\.\\d+)*(\\s*/\\s*\\d+(\\.\\d+)*)+\\s*$" .calc) }}
+      {{- $parts := split "/" .calc }}
+      {{- range $i, $p := $parts }}
+        {{- $p = trim $p }}
+        {{- if ne (trim $i) "_0" }}
+          {{- $result = divf $result $p }}
+        {{- else }}
+          {{- $result = $p }}
+        {{- end }}
+      {{- end }}
     {{- else }}
-  step5: "Not a valid calculation."
+      {{- $result = "Not a valid calculation." }}
     {{- end }}
+  {{- printf "%s = %v\n" .calc $result }}
   {{- end }}
