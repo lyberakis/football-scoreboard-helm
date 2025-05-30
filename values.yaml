@@ -6,7 +6,7 @@ service:
 
 calculations:
   - calc: 3 + 85 + 3
-  - calc: 5 + 44.5 + 22.6
+  - calc: 5+ 44.5 + 22.6
   - calc: 10 - 3 - 3
   - calc: 35 * 34
   - calc: 3.5 * 3.4

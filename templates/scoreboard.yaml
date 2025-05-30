@@ -1,8 +1,10 @@
 results:
+{{- $test := 0 }}
 {{- range .Values.calculations }}
   {{- $result := 0 }}
   {{- if (regexMatch "^\\s*\\d+(\\.\\d+)*(\\s*\\+\\s*\\d+(\\.\\d+)*)+\\s*$" .calc) }}
     {{- $parts := split "+" .calc }}
+    {{ $test = get $parts "_"$result }}
     {{- range $parts }}
       {{- $result = addf $result (trim . ) }}
     {{- end }}
@@ -36,4 +38,5 @@ results:
     {{- $result = "Not a valid calculation." }}
   {{- end }}
   - "{{- .calc }} = {{ $result }}"
+  - "Test {{ $test }}"
 {{- end }}
