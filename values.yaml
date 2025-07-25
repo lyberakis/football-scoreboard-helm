@@ -1,11 +1,5 @@
-replicaCount: 1
-
-service:
-  type: ClusterIP
-  port: 80
-
 calculations:
-  - calc: 3 + 85 + 3
+  - calc: 1 + 2
   - calc: 5+ 44.5 + 22.6
   - calc: 10 - 3 - 3
   - calc: 35 * 34
