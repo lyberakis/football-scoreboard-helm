@@ -1,0 +1,6 @@
+dependencies:
+- name: calculator-subchart
+  repository: file://charts/calculator-subchart
+  version: 1.0.0
+digest: sha256:79935fa625a0b45d7339ae04bcbf9f3c1fa09c3e3780cd9ac873dda1213a2921
+generated: "2025-06-06T16:45:35.325123+02:00"
